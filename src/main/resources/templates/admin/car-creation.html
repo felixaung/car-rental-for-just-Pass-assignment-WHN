@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Car</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="app-shell">
+    <th:block
+            th:replace="/admin/fragments/sidebar :: sidebar('Cars')"
+    ></th:block>
+
+    <main class="dashboard">
+        <div class="topbar">
+            <h1>Create Car</h1>
+        </div>
+
+        <section class="neo-modal">
+            <div class="neo-modal-header">
+                <h2>Add New Car</h2>
+                <a  class="neo-close-btn" th:href="@{/admin/cars}">×</a>
+            </div>
+
+
+            <form class="neo-form" th:action="@{/admin/cars-create}" th:object="${car}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+                <div>
+                    <label for="registrationNo">Registration No</label>
+                    <input type="text"
+                           id="registrationNo"
+                           th:field="*{registration_no}"
+                           placeholder="Enter registration number">
+                </div>
+
+                <div>
+                    <label for="engineNo">Engine No</label>
+                    <input type="text"
+                           id="engineNo"
+                           th:field="*{engine_no}"
+                           placeholder="Enter engine number">
+
+                </div>
+
+                <div>
+                    <label for="status">Car Status</label>
+                    <select id="status" th:field="*{status}">
+                        <option value="">Select status</option>
+                        <option th:each="statusItem : ${status}"
+                                th:value="${statusItem}"
+                                th:text="${statusItem}">
+                        </option>
+                    </select>
+                </div>
+                <div class="variant-row">
+                    <div class="variant-field">
+                        <label >Car Variant</label>
+                        <select id="carVariant" name="carVariant" required>
+                            <option value="">Select car variant</option>
+                            <option th:each="variant : ${carVariant}"
+                                    th:value="${variant.id}"
+                                    th:text="${variant.brand + ' ' + variant.model + ' (' + variant.year + ') - ' + variant.color}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-actions full-width">
+                    <button type="submit" class="btn-save">Save Car</button>
+                </div>
+            </form>
+        </section>
+    </main>
+</div>
+
+
+
+</body>
+</html>

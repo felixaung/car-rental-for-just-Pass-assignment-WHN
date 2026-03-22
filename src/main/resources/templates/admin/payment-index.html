@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="app-shell">
+    <th:block
+            th:replace="/admin/fragments/sidebar :: sidebar('Payments')"
+    ></th:block>
+
+    <main class="dashboard">
+        <div class="topbar">
+            <h1>Payments</h1>
+            <!-- <input class="search" type="text" placeholder="Search..." /> -->
+        </div>
+
+        <section class="stats-grid">
+            <div class="stat-card neo-card">
+                <div class="label">Total Cars</div>
+                <div class="value">124</div>
+            </div>
+            <div class="stat-card neo-card">
+                <div class="label">Bookings</div>
+                <div class="value">39</div>
+            </div>
+            <div class="stat-card neo-card">
+                <div class="label">Customers</div>
+                <div class="value">88</div>
+            </div>
+            <div class="stat-card neo-card">
+                <div class="label">Revenue</div>
+                <div class="value">$8.4K</div>
+            </div>
+        </section>
+
+        <section class="dashboard-grid">
+            <div class="panel neo-card">
+                <h2>Recent Bookings</h2>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Car</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr>
+                            <td>Aung</td>
+                            <td>Honda Fit</td>
+                            <td><span class="status approved">Approved</span></td>
+                            <td>2026-03-09</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="panel neo-card">
+                <h2>Quick Actions</h2>
+                <div class="quick-actions">
+                    <button>Add Car</button>
+                    <button>Approve Booking</button>
+                    <button>View Reports</button>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+</body>
+</html>

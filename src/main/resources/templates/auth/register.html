@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+<body>
+
+<!--<form th:action="@{/auth/register}" th:object="${user}" method="post">-->
+<!--    <label>Name:</label>-->
+<!--    <input type="text" th:field="*{username}" required/><br/>-->
+<!--    <label>Email:</label>-->
+<!--    <input type="email" th:field="*{email}" required/><br/>-->
+<!--    <label>Password:</label>-->
+<!--    <input type="password" th:field="*{password}" required/><br/>-->
+<!--    <button type="submit">Register</button>-->
+<!--</form>-->
+
+<!--<p th:if="${message}" th:text="${message}"></p>-->
+
+<!--<p><a th:href="@{/auth/login}">Already have an account? Login</a></p>-->
+
+
+<div class="login-container">
+    <h1>Register</h1>
+
+    <form th:action="@{/auth/registration}" th:object="${user}" method="POST">
+
+    <div class="input-group">
+        <label for="username">UserName</label>
+        <input type="text" id="username" th:field="*{username}" placeholder="your name" >
+    </div>
+
+    <div class="input-group">
+        <label for="email">EMAIL</label>
+        <input type="email" id="email" th:field="*{email}" placeholder="your@email.com">
+    </div>
+
+    <div class="input-group">
+        <label for="password">PASSWORD</label>
+        <input type="password" id="password" th:field="*{password}" placeholder="••••••••">
+    </div>
+
+    <button type="submit">SIGN Up</button>
+    </form>
+
+<!--    <div class="divider">OR</div>-->
+
+<!--    <div class="social-login">-->
+<!--        <div class="social-btn">G</div>-->
+<!--        <div class="social-btn">F</div>-->
+<!--        <div class="social-btn">X</div>-->
+<!--    </div>-->
+
+    <div class="footer">
+        Already have an account? <a th:href="@{/auth/login}">Log In</a>
+
+    </div>
+</div>
+</body>
+</html>

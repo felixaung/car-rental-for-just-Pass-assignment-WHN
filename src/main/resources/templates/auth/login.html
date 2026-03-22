@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+<body>
+
+<div class="login-container">
+    <h1>LOGIN</h1>
+    <form th:action="@{/auth/logins}" method="POST">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    <div class="input-group">
+        <label for="email">EMAIL</label>
+        <input type="email" id="email" name="email" placeholder="your@email.com">
+    </div>
+
+    <div class="input-group">
+        <label for="password">PASSWORD</label>
+        <input type="password" id="password" name="password" placeholder="••••••••">
+    </div>
+
+    <button type="submit">SIGN IN</button>
+    </form>
+
+<!--    <div class="divider">OR</div>-->
+
+<!--    <div class="social-login">-->
+<!--        <div class="social-btn">G</div>-->
+<!--        <div class="social-btn">F</div>-->
+<!--        <div class="social-btn">X</div>-->
+<!--    </div>-->
+
+    <div class="footer">
+        Don't have an account? <a th:href="@{/auth/register}">Sign up</a>
+
+    </div>
+</div>
+</body>
+</html>

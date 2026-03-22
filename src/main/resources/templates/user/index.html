@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Car Rental</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="landing-page">
+
+    <th:block
+            th:replace="/user/fragments/header"
+    ></th:block>
+
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="hero-copy neo-card">
+                <span class="neo-pill">Fast Booking</span>
+                <h1>Rent bold. Drive easy.</h1>
+                <p>
+                    Browse cars, book faster, and manage rentals with a playful
+                    neo-brutalist experience.
+                </p>
+                <div class="hero-actions">
+                    <button class="primary">Book Now</button>
+                    <button class="secondary">Explore Cars</button>
+                </div>
+            </div>
+
+            <div class="hero-visual neo-card">
+                <div class="hero-badge one">24/7 Support</div>
+                <div class="hero-blob"></div>
+                <div class="hero-badge two">Best Deals</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Why us</h2>
+            <div class="feature-grid">
+                <div class="feature-card neo-card">
+                    <h3>Simple Booking</h3>
+                    <p>Choose your car and reserve it in a few clicks.</p>
+                </div>
+                <div class="feature-card neo-card">
+                    <h3>Clear Pricing</h3>
+                    <p>No hidden surprises. Everything is easy to read.</p>
+                </div>
+                <div class="feature-card neo-card">
+                    <h3>Fast Support</h3>
+                    <p>Quick help when you need changes or assistance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

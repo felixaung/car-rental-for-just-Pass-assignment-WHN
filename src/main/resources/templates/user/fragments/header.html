@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+
+<header th:fragment="header" class="site-header">
+  <div class="container">
+    <div class="bar">
+      <div class="logo">CarRental</div>
+      <nav class="nav-links">
+        <a th:href="@{/}">Home</a>
+        <a th:href="@{/user/cars}">Cars</a>
+        <a href="#">Pricing</a>
+        <a sec:authorize="isAnonymous()" th:href="@{/auth/login}">Login</a>
+
+        <form sec:authorize="isAuthenticated()"
+              th:action="@{/logout}"
+              method="post"
+              style="display:inline;">
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+          <button type="submit">Logout</button>
+        </form>
+
+      </nav>
+    </div>
+  </div>
+</header>
+</body>
+</html>

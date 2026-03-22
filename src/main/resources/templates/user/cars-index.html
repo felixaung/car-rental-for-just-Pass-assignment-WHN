@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Car Rental</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="landing-page">
+  <th:block th:replace="/user/fragments/header"></th:block>
+
+  <main class="car-page container">
+    <section class="car-page-head neo-card">
+      <div>
+<!--        <span class="neo-pill">Available Cars</span>-->
+        <h1 class="section-title">Choose Your Ride</h1>
+        <p class="car-page-subtitle">
+          Pick from economy, SUV, luxury, and family cars.
+        </p>
+      </div>
+
+      <div class="car-toolbar">
+        <input type="text" placeholder="Search car..." />
+        <select>
+          <option value="">All Types</option>
+          <option>Sedan</option>
+          <option>SUV</option>
+          <option>Truck</option>
+          <option>Luxury</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="car-grid">
+      <article class="car-card neo-card" th:each="car : ${cars}">
+        <div class="car-card-media">
+          <img
+                  th:src="${car.carVariant.image}"
+                  th:alt="${car.carVariant.brand + ' ' + car.carVariant.model}"
+          />
+          <span class="car-badge available" th:text="${car.status}">Available</span>
+        </div>
+
+        <div class="car-card-body">
+          <div class="car-title-row">
+            <h3 th:text="${car.carVariant.brand + ' ' + car.carVariant.model}">Toyota Corolla</h3>
+            <span class="car-price" th:text="'$' + ${car.carVariant.pricePerDay} + '/day'">$48/day</span>
+          </div>
+
+          <p class="car-desc" th:text="${car.carVariant.description}">
+            Comfortable city car with excellent fuel economy and smooth handling.
+          </p>
+
+          <div class="car-specs">
+            <span th:text="${car.carVariant.year}">2023</span>
+            <span th:text="${car.carVariant.seat + ' Seats'}">5 Seats</span>
+            <span th:text="${car.carVariant.fuelType}">Petrol</span>
+            <span th:text="${car.carVariant.color}">White</span>
+          </div>
+
+          <form th:action="@{/user/bookings}" method="post" class="booking-form">
+            <input type="hidden" name="carId" th:value="${car.id}" />
+            <input
+                    type="hidden"
+                    th:name="${_csrf.parameterName}"
+                    th:value="${_csrf.token}"
+            />
+
+            <div class="booking-date-grid">
+              <div>
+                <label>Start Date</label>
+                <input type="date" name="startDate" required />
+              </div>
+              <div>
+                <label>End Date</label>
+                <input type="date" name="endDate" required />
+              </div>
+            </div>
+
+            <div class="car-card-actions">
+              <a class="neo-link-btn btn-edit" th:href="@{/user/cars/{id}(id=${car.id})}">
+                View Details
+              </a>
+              <button class="btn-save" type="submit">Book Now</button>
+            </div>
+          </form>
+        </div>
+      </article>
+
+    </section>
+  </main>
+</div>
+</body>
+</html>

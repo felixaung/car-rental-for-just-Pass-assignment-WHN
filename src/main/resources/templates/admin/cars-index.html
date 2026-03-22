@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="app-shell">
+    <th:block
+            th:replace="/admin/fragments/sidebar :: sidebar('Cars')"
+    ></th:block>
+
+    <main class="dashboard">
+        <div class="topbar">
+            <h1>Cars</h1>
+
+            <a class="neo-link-btn" th:href="@{/admin/cars/creation}">Add Car </a>
+        </div>
+
+
+            <div class="panel neo-card">
+                <h2>Car Lists</h2>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Car</th>
+                            <th>License Plate</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr th:each="car : ${cars}">
+                            <td th:text="${car.engine_no}"></td>
+                            <td th:text="${car.registration_no}">Honda Fit</td>
+                            <td><span class="status approved" th:text="${car.status}"></span></td>
+                            <td >2026-03-09</td>
+                        </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+    </main>
+</div>
+</body>
+</html>

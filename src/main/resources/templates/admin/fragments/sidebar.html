@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+
+<aside th:fragment="sidebar (currentPage)" class="sidebar">
+    <div class="sidebar-brand">CarRental Admin</div>
+
+    <div class="sidebar-user">
+        <strong>Admin User</strong>
+        <span>System Control Panel</span>
+    </div>
+
+    <nav class="sidebar-nav">
+        <a th:classappend="${currentPage == 'Dashboard' ? 'active' : ''}" th:href="@{/admin/}" >Dashboard</a>
+        <a th:classappend="${currentPage == 'Cars' ? 'active' : ''}" th:href="@{/admin/cars}">Cars</a>
+        <a th:classappend="${currentPage == 'Bookings' ? 'active' : ''}" th:href="@{/admin/bookings}">Bookings</a>
+        <a th:classappend="${currentPage == 'Customers' ? 'active' : ''}" th:href="@{/admin/customers}">Customers</a>
+        <a th:classappend="${currentPage == 'Payments' ? 'active' : ''}" th:href="@{/admin/payments}">Payments</a>
+        <a th:classappend="${currentPage == 'Car-Variant' ? 'active' : ''}" th:href="@{/admin/car-variant}">Car Variant</a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <form sec:authorize="isAuthenticated()"
+              th:action="@{/logout}"
+              method="post"
+              style="display:inline;">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+</aside>
+
+</body>
+</html>

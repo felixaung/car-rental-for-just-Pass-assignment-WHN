@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="app-shell">
+    <th:block
+            th:replace="/admin/fragments/sidebar :: sidebar('Customers')"
+    ></th:block>
+
+    <main class="dashboard">
+        <div class="topbar">
+            <h1>Customers</h1>
+
+        </div>
+
+
+        <div class="panel neo-card">
+            <h2>Recent Bookings</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Car</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr>
+                        <td>Aung</td>
+                        <td>Honda Fit</td>
+                        <td><span class="status approved">Approved</span></td>
+                        <td>2026-03-09</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+</div>
+</body>
+</html>

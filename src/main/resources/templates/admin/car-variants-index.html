@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="app-shell">
+    <th:block
+            th:replace="/admin/fragments/sidebar :: sidebar('Car-Variant')"
+    ></th:block>
+
+    <main class="dashboard">
+        <div class="topbar">
+            <h1>Car Variant</h1>
+
+            <a class="neo-link-btn" th:href="@{/admin/car-variant/creation}">Add Car Variant </a>
+        </div>
+
+
+        <div class="panel neo-card">
+            <h2>Car Lists</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Brand</th>
+                        <th>Model</th>
+                        <th>Year</th>
+                        <th>Seat</th>
+                        <th>Fuel Type</th>
+                        <th>Color</th>
+                        <th>Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="variant : ${carVariant}">
+
+                        <td th:text="${variant.brand}">Honda</td>
+                        <td th:text="${variant.model}">Fit</td>
+                        <td th:text="${variant.year}">2024</td>
+                        <td th:text="${variant.seat}">5</td>
+                        <td th:text="${variant.fuelType}">Petrol</td>
+                        <td th:text="${variant.color}">White</td>
+                        <td th:text="${variant.pricePerDay}">50000</td>
+                    </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+</div>
+</body>
+</html>
