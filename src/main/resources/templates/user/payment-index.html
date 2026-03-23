@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Payments</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+</head>
+<body>
+<div class="landing-page">
+
+    <th:block th:replace="/user/fragments/header"></th:block>
+
+    <main class="container car-page">
+        <section class="neo-card car-page-head">
+            <div>
+                <h1 class="section-title">My Payments</h1>
+                <p class="car-page-subtitle">
+                    Check your booking payments, pay pending bookings, or cancel unpaid ones.
+                </p>
+            </div>
+            <div class="neo-card panel">
+                <h2>Payment Summary</h2>
+                <p>Total Bookings: <strong th:text="${#lists.size(bookings)}">0</strong></p>
+            </div>
+        </section>
+
+        <section class="neo-card panel">
+            <h2>Booking List</h2>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Car</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Total Amount</th>
+                        <th>Booking Status</th>
+                        <th>Payment Actions</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="booking : ${bookings}"
+                        class="clickable-row"
+                        onclick="openReturnModal(this)"
+                        th:attr="data-booking-id=${booking.id},
+                                 data-booking-status=${booking.status},
+                                 data-payment-status=${booking.payment != null ? booking.payment.payment_status : 'UNPAID'},
+                                 data-car-name=${booking.car != null && booking.car.carVariant != null ? booking.car.carVariant.brand + ' ' + booking.car.carVariant.model : 'N/A'}">
+
+                        <td th:text="${booking.car.carVariant.brand + ' ' + booking.car.carVariant.model}">Car</td>
+                        <td th:text="${booking.start_date != null ? booking.start_date : '-'}">2026-03-23T10:00:00Z</td>
+                        <td th:text="${booking.end_date != null ? booking.end_date : '-'}">2026-03-25T10:00:00Z</td>
+                        <td th:text="${booking.total_amount != null ? booking.total_amount : 0}">100.00</td>
+
+                        <td>
+                            <span class="status"
+                                  th:text="${booking.status != null ? booking.status : 'N/A'}">
+                                PENDING
+                            </span>
+                        </td>
+
+                        <td onclick="event.stopPropagation();">
+
+                            <div class="form-actions"
+                                 th:if="${booking.status != null
+                 and booking.status.name() != 'CANCELLED'
+                 and (booking.payment == null
+                      or (booking.payment.payment_status != null
+                          and booking.payment.payment_status.name() == 'PENDING'))}">
+
+                                <form th:action="@{/user/payments/{id}/pay(id=${booking.id})}" method="post">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                                    <button type="submit" class="btn-save">Pay</button>
+                                </form>
+
+                                <form th:action="@{/user/payments/{id}/cancel(id=${booking.id})}" method="post"
+                                      onsubmit="return confirm('Are you sure you want to cancel this booking?');">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                                    <button type="submit" class="btn-delete">Cancel</button>
+                                </form>
+                            </div>
+
+                            <span th:if="${booking.status != null and booking.status.name() == 'CANCELLED'}">
+        Refunded
+    </span>
+
+                            <span th:if="${booking.status != null
+                  and booking.status.name() != 'CANCELLED'
+                  and booking.payment != null
+                  and booking.payment.payment_status != null
+                  and booking.payment.payment_status.name() == 'PAID'}">
+        Paid
+    </span>
+
+                        </td>
+                    </tr>
+
+                    <tr th:if="${#lists.isEmpty(bookings)}">
+                        <td colspan="7">No bookings found for your account.</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+
+<div id="returnModal" class="neo-modal-backdrop">
+    <div class="neo-modal">
+        <div class="neo-modal-header">
+            <h2>Return <strong id="returnCarName">Car Name</strong></h2>
+
+        </div>
+
+        <form id="returnForm" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <div class="modal-actions">
+                <button type="submit" class="btn-save">Yes</button>
+                <button type="button" class="btn-cancel" onclick="closeReturnModal()">No</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openReturnModal(row) {
+        const bookingId = (row.dataset.bookingId || '').trim();
+        const bookingStatus = (row.dataset.bookingStatus || '').trim().toUpperCase();
+        const paymentStatus = (row.dataset.paymentStatus || '').trim().toUpperCase();
+        const carName = row.dataset.carName || 'N/A';
+
+        if (paymentStatus !== 'PAID' || bookingStatus !== 'ACTIVE') {
+            return;
+        }
+
+        document.getElementById('returnCarName').textContent = carName;
+        document.getElementById('returnForm').action = '/user/payments/' + bookingId + '/return';
+        document.getElementById('returnModal').classList.add('show');
+    }
+
+    function closeReturnModal() {
+        document.getElementById('returnModal').classList.remove('show');
+    }
+
+    window.addEventListener('click', function (e) {
+        const modal = document.getElementById('returnModal');
+        if (e.target === modal) {
+            closeReturnModal();
+        }
+    });
+
+    window.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            closeReturnModal();
+        }
+    });
+</script>
+</body>
+</html>

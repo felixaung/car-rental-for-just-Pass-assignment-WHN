@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class CarVariantController {
@@ -33,7 +34,13 @@ public class CarVariantController {
     public String carVariantCreate(@ModelAttribute CarVariant carVariant, Model model){
 
         carVariantService.saveCarVariant(carVariant);
-        return "admin/car-variants-creation";
+        return "redirect:/admin/car-variant";
+    }
+
+    @PostMapping("/admin/car-variant/delete")
+    public String carVariantDelete(@RequestParam("id") Long id){
+        carVariantService.deleteCarVariantById(id);
+        return "redirect:/admin/car-variant";
     }
 
 

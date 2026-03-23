@@ -2,6 +2,7 @@ package com.car.rental.repositories;
 
 import com.car.rental.models.Booking;
 import com.car.rental.models.BookingStatus;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -36,4 +37,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     where b.status = :status
 """)
     List<Booking> findAllByBookingStatus(@Param("status") BookingStatus status);
+
+    @EntityGraph(attributePaths = {"car", "payment", "customer"})
+    List<Booking> findAllByCustomerEmailOrderByIdDesc(String email);
 }

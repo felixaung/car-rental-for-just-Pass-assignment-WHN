@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 public class UserController {
 
@@ -19,4 +21,11 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/admin/users")
+    public String usersList(Model model){
+        model.addAttribute("users", userService.findAll());
+        List<User> users = userService.findAll();
+        System.out.println("users size = " + users.size());
+        return "admin/customers-index";
+    }
 }

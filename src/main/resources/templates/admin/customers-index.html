@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Customers</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
@@ -16,37 +16,44 @@
     <main class="dashboard">
         <div class="topbar">
             <h1>Customers</h1>
-
         </div>
 
-
         <div class="panel neo-card">
-            <h2>Recent Bookings</h2>
+            <h2>Customers</h2>
             <div class="table-wrap">
                 <table>
                     <thead>
                     <tr>
-                        <th>Customer</th>
-                        <th>Car</th>
-                        <th>Status</th>
-                        <th>Date</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+
                     </tr>
                     </thead>
                     <tbody>
 
-                    <tr>
-                        <td>Aung</td>
-                        <td>Honda Fit</td>
-                        <td><span class="status approved">Approved</span></td>
-                        <td>2026-03-09</td>
+                    <tr th:each="user : ${users}"
+                        class="clickable-row">
+                        <td th:text="${user.username}">Aung</td>
+                        <td th:text="${user.email}">aung@gmail.com</td>
+                        <td>
+                            <span class="status approved" th:text="${user.role}">USER</span>
+                        </td>
+
+                    </tr>
+
+                    <tr th:if="${#lists.isEmpty(users)}">
+                        <td colspan="4">No users found.</td>
                     </tr>
 
                     </tbody>
                 </table>
             </div>
         </div>
-
     </main>
 </div>
+
+
+
 </body>
 </html>

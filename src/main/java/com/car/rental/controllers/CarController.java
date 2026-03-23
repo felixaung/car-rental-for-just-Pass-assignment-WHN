@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class CarController {
@@ -46,5 +47,22 @@ public class CarController {
     public String carCreate(@ModelAttribute Car car, Model model){
         carService.save(car);
         return  "redirect:/admin/cars";
+    }
+
+    @PostMapping("/admin/cars/update")
+    public String updateCar(
+            @RequestParam Long id,
+            @RequestParam String engine_no,
+            @RequestParam String registration_no,
+            @RequestParam CarStatus status
+    ) {
+        carService.updateCar(id, engine_no, registration_no, status);
+        return "redirect:/admin/cars";
+    }
+
+    @PostMapping("/admin/cars/delete")
+    public String deleteCar(@RequestParam Long id) {
+        carService.deleteCar(id);
+        return "redirect:/admin/cars";
     }
 }

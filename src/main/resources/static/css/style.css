@@ -1050,3 +1050,112 @@ th {
     grid-template-columns: 1fr;
   }
 }
+
+.clickable-row {
+    cursor: pointer;
+}
+
+.neo-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 24px;
+}
+
+.neo-modal-backdrop.show {
+    display: flex;
+}
+
+.neo-modal {
+    background: #fff8dc;
+    border: 3px solid #111;
+    box-shadow: 8px 8px 0 #111;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.neo-modal-lg {
+    width: 90vw;
+    height: 95vh;
+    max-width: 1100px;
+    max-height: 800px;
+    min-width: 320px;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+}
+
+.neo-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 3px solid #111;
+    background: #ffd54f;
+}
+
+.neo-close-btn {
+    border: 3px solid #111;
+    background: #ff6b6b;
+    color: #111;
+    font-size: 24px;
+    font-weight: 700;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 #111;
+}
+
+.neo-form {
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    overflow: auto;
+    flex: 1;
+}
+
+.neo-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.neo-form input,
+.neo-form select {
+    width: 100%;
+    padding: 12px;
+    border: 3px solid #111;
+    background: #fff;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.modal-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.btn-accept,
+.btn-reject {
+    border: 3px solid #111;
+    padding: 12px 20px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 #111;
+}
+
+.btn-accept {
+    background: #7bed9f;
+}
+
+.btn-reject {
+    background: #ff7675;
+}

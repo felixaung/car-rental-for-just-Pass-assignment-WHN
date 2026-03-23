@@ -11,7 +11,7 @@
       <nav class="nav-links">
         <a th:href="@{/}">Home</a>
         <a th:href="@{/user/cars}">Cars</a>
-        <a href="#">Pricing</a>
+        <a th:href="@{/user/payments}">Payment</a>
         <a sec:authorize="isAnonymous()" th:href="@{/auth/login}">Login</a>
 
         <form sec:authorize="isAuthenticated()"

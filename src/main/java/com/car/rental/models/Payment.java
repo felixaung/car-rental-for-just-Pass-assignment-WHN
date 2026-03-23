@@ -28,8 +28,8 @@ public class Payment {
     @JoinColumn(name = "verified_by")
     private User verifiedBy;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "booking_id", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "booking_id", nullable = false, unique = true)
     private Booking booking;
 
     public Payment() {

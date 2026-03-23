@@ -40,11 +40,6 @@ public class BookingController {
             @AuthenticationPrincipal UserDetails userDetails,
             RedirectAttributes redirectAttributes
     ) {
-        System.out.println("saving booking request");
-        System.out.println("carId = " + carId);
-        System.out.println("startDate = " + startDate);
-        System.out.println("endDate = " + endDate);
-        System.out.println("principal = " + (userDetails != null ? userDetails.getUsername() : "null"));
 
         try {
             bookingService.save(userDetails.getUsername(), carId, startDate, endDate);
@@ -59,7 +54,7 @@ public class BookingController {
 
     @PostMapping("/admin/accept-booking")
     public String acceptBooking(@RequestParam("bookingId") Long bookingId) {
-        bookingService.accpetBookings(bookingId);
+        bookingService.acceptBookings(bookingId);
         return "redirect:/admin/bookings";
     }
 

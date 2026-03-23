@@ -31,9 +31,9 @@ public class BookingService {
     }
 
     @Transactional
-    public void accpetBookings(Long id){
+    public void acceptBookings(Long id){
         Booking booking = bookingRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Booking not found"));
-        booking.setStatus(BookingStatus.Approved);
+        booking.setStatus(BookingStatus.Active);
         booking.getCar().setStatus(CarStatus.Rented);
 
     }
@@ -43,6 +43,7 @@ public class BookingService {
         Booking booking =  bookingRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Booking not found"));
         booking.setStatus(BookingStatus.Rejected);
         booking.getCar().setStatus(CarStatus.Available);
+        bookingRepository.delete(booking);
 
     }
 
@@ -90,6 +91,16 @@ public class BookingService {
         car.setStatus(CarStatus.Booked);
     }
 
+    @Transactional
+    public void updateBooking(Long id){
+
+    }
+
+    @Transactional
+    public void deleteBooking(Long id){
+        bookingRepository.deleteById(id);
+    }
+
 
     public List<Booking> findAll(){
         return bookingRepository.findAll();
@@ -99,11 +110,43 @@ public class BookingService {
         return bookingRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Booking not found"));
     }
 
+    public List<Booking> findAllByCustomerEmail(String email) {
+        return bookingRepository.findAllByCustomerEmailOrderByIdDesc(email);
+    }
+
 
     public List<Booking> findAllPending(){
         return bookingRepository.findAllByBookingStatus(BookingStatus.Pending);
     }
 
+    @Transactional
+    public void returnUserBooking(Long bookingId, String userEmail) {
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new RuntimeException("Booking not found"));
+
+        if (!booking.getCustomer().getEmail().equals(userEmail)) {
+            throw new RuntimeException("Unauthorized access");
+        }
+
+        if (booking.getPayment() == null || booking.getPayment().getPayment_status() != PaymentStatus.PAID) {
+            throw new RuntimeException("Only paid bookings can be returned");
+        }
+
+        if (booking.getStatus() == BookingStatus.Cancelled || booking.getStatus() == BookingStatus.Returned) {
+            throw new RuntimeException("This booking cannot be returned");
+        }
+
+        booking.setStatus(BookingStatus.Returned);
+        booking.setReturn_date(Instant.now());
+
+        Car car = booking.getCar();
+        if (car != null) {
+            car.setStatus(CarStatus.Available);
+            carRepository.save(car);
+        }
+
+        bookingRepository.save(booking);
+    }
 
     private Instant toStartOfDay(LocalDate date) {
         return date.atStartOfDay(ZoneId.systemDefault()).toInstant();

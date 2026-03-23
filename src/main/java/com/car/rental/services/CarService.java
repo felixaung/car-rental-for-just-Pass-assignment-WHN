@@ -5,6 +5,7 @@ import com.car.rental.models.BookingStatus;
 import com.car.rental.models.Car;
 import com.car.rental.models.CarStatus;
 import com.car.rental.repositories.CarRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.EnumSet;
@@ -49,5 +50,19 @@ public class CarService {
 
     public void delete(Car car){
         carRepository.delete(car);
+    }
+
+    @Transactional
+    public void updateCar(Long id, String engineNo,String regitrationNo,CarStatus status){
+        Car car = carRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Car with id " + id + " not found"));
+        car.setEngine_no(engineNo);
+        car.setRegistration_no(regitrationNo);
+        car.setStatus(status);
+        car.setCarVariant(car.getCarVariant());
+    }
+
+    @Transactional
+    public void deleteCar(Long id){
+        carRepository.deleteById(id);
     }
 }

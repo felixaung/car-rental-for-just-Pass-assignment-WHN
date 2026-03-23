@@ -46,10 +46,13 @@ public class Booking {
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;
 
+    @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Payment payment;
+
     public Booking() {
     }
 
-    public Booking(Long id, BookingStatus status, Instant start_date, Instant end_date, Instant return_date, String rejection_reason, BigDecimal total_amount, User customer, User approvedBy, Car car) {
+    public Booking(Long id, BookingStatus status, Instant start_date, Instant end_date, Instant return_date, String rejection_reason, BigDecimal total_amount, User customer, User approvedBy, Car car, Payment payment) {
         this.id = id;
         this.status = status;
         this.start_date = start_date;
@@ -60,6 +63,7 @@ public class Booking {
         this.customer = customer;
         this.approvedBy = approvedBy;
         this.car = car;
+        this.payment = payment;
     }
 
     public Long getId() {
@@ -140,5 +144,13 @@ public class Booking {
 
     public void setCar(Car car) {
         this.car = car;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 }
