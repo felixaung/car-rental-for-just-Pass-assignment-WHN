@@ -2,6 +2,7 @@ package com.car.rental.controllers;
 
 
 import com.car.rental.models.Booking;
+import com.car.rental.models.Payment;
 import com.car.rental.services.BookingService;
 import com.car.rental.services.PaymentService;
 import org.springframework.security.core.Authentication;
@@ -25,10 +26,7 @@ public class PaymentController {
 
     }
 
-    @GetMapping("/admin/payments")
-    public String paymentIndex(){
-        return "admin/payment-index";
-    }
+
 
     @GetMapping("/user/payments")
     public String userPaymentIndex(Authentication authentication, Model model) {
@@ -37,6 +35,21 @@ public class PaymentController {
 
         model.addAttribute("bookings", bookings);
         return "user/payment-index";
+    }
+
+    @GetMapping("/admin/payment")
+    public String adminPayment(Model model){
+        List<Payment> payments = paymentService.findAllWithDetails();
+
+        System.out.println("payments size = " + payments.size());
+        for (Payment p : payments) {
+            System.out.println("payment id = " + p.getId()
+                    + ", amount = " + p.getAmount()
+                    + ", status = " + p.getPayment_status()
+                    + ", booking = " + (p.getBooking() != null ? p.getBooking().getId() : null));
+        }
+        model.addAttribute("payments", paymentService.findAllWithDetails());
+        return "admin/payment-index";
     }
 
     @PostMapping("/user/payments/{bookingId}/pay")

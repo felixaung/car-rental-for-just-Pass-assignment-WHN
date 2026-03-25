@@ -32,6 +32,10 @@ public class PaymentService {
         return paymentRepository.findAll();
     }
 
+    public List<Payment> findAllWithDetails() {
+        return paymentRepository.findAllWithDetails();
+    }
+
     public Payment findById(Long id) {
         return paymentRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Payment not found"));
     }
